@@ -7,3 +7,10 @@ export type User = {
   username: string;
   name: string;
 }
+
+/** Day */
+export type Day = {
+  date: Date;
+  description: string;
+  userId: string;
+}
