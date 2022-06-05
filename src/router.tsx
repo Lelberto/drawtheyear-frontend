@@ -2,8 +2,10 @@ import { FC, useContext } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import { AuthContext } from './contexts/auth';
 import { AppPage } from './pages/app';
+import { GridPage } from './pages/grid';
 import { LoginPage } from './pages/login';
 import { LoginSuccessPage } from './pages/login-success';
+import { UserPage } from './pages/user';
 
 /** 
  * Router component
@@ -15,7 +17,13 @@ export const Router: FC = () => {
 
   return authUser ? (
     <Routes>
-      <Route path="/" element={<AppPage />} />
+      <Route path="/" element={<AppPage />}>
+        <Route path="user" element={<Outlet />}>
+          <Route path=":userId" element={<UserPage />} >
+            <Route path="grid" element={<GridPage />} />
+          </Route>
+        </Route>
+      </Route>
     </Routes>
   ) : (
     <Routes>
