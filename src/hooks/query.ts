@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { Link } from '../types/hateoas';
 import { Response } from '../types/responses';
 
@@ -12,8 +12,8 @@ import { Response } from '../types/responses';
  */
 export const useQuery = () => {
 
-  const get = async <R extends Response>(url: string) => {
-    const response = await axios.get<R>(url);
+  const get = async <R extends Response>(url: string, config?: AxiosRequestConfig) => {
+    const response = await axios.get<R>(url, config);
     return response.data;
   }
 
