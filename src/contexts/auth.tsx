@@ -49,6 +49,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
           .catch(console.error);
       }).catch(console.error);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
