@@ -8,6 +8,12 @@ export type User = {
   name: string;
 }
 
+/** Emotion */
+export type Emotion = {
+  name: string;
+  color: string;
+}
+
 /** Day */
 export type Day = {
   date: Date;
