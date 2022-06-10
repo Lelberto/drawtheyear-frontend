@@ -17,7 +17,7 @@ export const LoginSuccessPage = () => {
       const refreshToken = queryParams.get('refreshToken');
       auth.updateTokens(refreshToken).then(() => {
         auth.refreshAuthUser().then(() => {
-          navigate('/', { replace: true });
+          navigate('/', { replace: true })
         }).catch(console.error);
       }).catch(console.error);
     } else {
