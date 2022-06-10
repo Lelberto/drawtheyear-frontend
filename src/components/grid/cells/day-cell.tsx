@@ -21,7 +21,7 @@ export const DayCell = ({ dayNumber, day }: DayCellContentProps) => {
 
   useEffect(() => {
     if (day) {
-      query.get(`http://localhost:8080/users/e1672136-3d60-405a-9cec-57c1849e320a/days/${moment(day.date).format('YYYY-MM-DD')}/emotions`)
+      query.get(`http://localhost:8080/users/jerme/days/${moment(day.date).format('YYYY-MM-DD')}/emotions`)
         .then(res => setEmotions(res.data.emotions))
         .catch(console.error);
     }
