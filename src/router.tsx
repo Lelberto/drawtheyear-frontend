@@ -1,11 +1,11 @@
 import { FC, useContext } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import { AuthContext } from './contexts/auth';
-import { AppPage } from './pages/app';
-import { GridPage } from './pages/grid';
-import { LoginPage } from './pages/login';
-import { LoginSuccessPage } from './pages/login-success';
-import { UserPage } from './pages/user';
+import { AppPage } from './pages/app.page';
+import { GridPage } from './pages/grid.page';
+import { LoginPage } from './pages/login.page';
+import { LoginSuccessPage } from './pages/login-success.page';
+import { UserPage } from './pages/user.page';
 
 /** 
  * Router component
