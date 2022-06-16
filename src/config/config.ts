@@ -5,6 +5,7 @@ export type ConfigSchema = {
     endpoints: {
       googleAuth: string;
       accessToken: string;
+      users: string;
       userProfile: string;
     };
   };
@@ -17,6 +18,7 @@ const config: ConfigSchema = {
     endpoints: {
       googleAuth: process.env.REACT_APP_API_GOOGLE_AUTH_ENDPOINT || '/auth/google?platform=web',
       accessToken: process.env.REACT_APP_API_ENDPOINT_ACCESS_TOKEN || '/auth/accessToken',
+      users: process.env.REACT_APP_API_ENDPOINT_USER || '/users',
       userProfile: process.env.REACT_APP_API_ENDPOINT_USER_PROFILE || '/users/profile'
     }
   }
