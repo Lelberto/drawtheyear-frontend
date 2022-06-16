@@ -1,6 +1,6 @@
 import { FC, useContext } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
-import { AuthContext } from './contexts/auth';
+import { AuthContext } from './contexts/auth.context';
 import { AppPage } from './pages/app.page';
 import { GridPage } from './pages/grid.page';
 import { LoginPage } from './pages/login.page';
