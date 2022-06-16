@@ -1,13 +1,12 @@
+import { AxiosError } from 'axios';
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import { useQuery } from '../hooks/query';
 import { User } from '../types/data';
-import { Link } from '../types/hateoas';
 import { LocalStorageKey } from '../types/local-storage';
 
 /** Authentication context value */
 type AuthContextValue = {
   authUser: User;
-  links: Link[];
   refreshAuthUser: () => Promise<void>;
   updateTokens: (refreshToken?: string) => Promise<void>;
 };
@@ -27,14 +26,12 @@ type AuthContextProviderProps = {
 /** Authentication context provider */
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [authUser, setAuthUser] = useState<User>();
-  const [links, setLinks] = useState<Link[]>([]);
   const query = useQuery();
 
   const refreshAuthUser = async () => {
     const accessToken = localStorage.getItem(LocalStorageKey.ACCESS_TOKEN);
     const res = await query.get('http://localhost:8080/users/profile', { headers: { Authorization: `Bearer ${accessToken}` } });
     setAuthUser(res.data.user);
-    setLinks(res.links);
   }
 
   const updateTokens = async (refreshToken: string) => {
@@ -50,14 +47,14 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       updateTokens(refreshToken).then(() => {
         refreshAuthUser()
           .then(() => console.log('User authenticated'))
-          .catch(console.error);
-      }).catch(console.error);
+          .catch((err: AxiosError) => console.error(err.response.data));
+      }).catch((err: AxiosError) => console.error(err.response.data));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <AuthContext.Provider value={{ authUser, links, refreshAuthUser, updateTokens }}>
+    <AuthContext.Provider value={{ authUser, refreshAuthUser, updateTokens }}>
       {children}
     </AuthContext.Provider>
   );
