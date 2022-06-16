@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
 import { createContext, ReactNode, useEffect, useState } from 'react';
+import config from '../config/config';
 import { useQuery } from '../hooks/query';
 import { User } from '../types/data';
 import { LocalStorageKey } from '../types/local-storage';
@@ -29,13 +30,15 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const query = useQuery();
 
   const refreshAuthUser = async () => {
+    const { api } = config;
     const accessToken = localStorage.getItem(LocalStorageKey.ACCESS_TOKEN);
-    const res = await query.get('http://localhost:8080/users/profile', { headers: { Authorization: `Bearer ${accessToken}` } });
+    const res = await query.get(`${api.url}${api.endpoints.userProfile}`, { headers: { Authorization: `Bearer ${accessToken}` } });
     setAuthUser(res.data.user);
   }
 
   const updateTokens = async (refreshToken: string) => {
-    const res = await query.post('http://localhost:8080/auth/accessToken', { 'refresh_token': refreshToken });
+    const { api } = config;
+    const res = await query.post(`${api.url}${api.endpoints.accessToken}`, { 'refresh_token': refreshToken });
     const { access_token, refresh_token } = res.data;
     localStorage.setItem(LocalStorageKey.ACCESS_TOKEN, access_token);
     localStorage.setItem(LocalStorageKey.REFRESH_TOKEN, refresh_token);
