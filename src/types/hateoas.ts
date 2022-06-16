@@ -1,5 +1,10 @@
 /** HATEOAS types */
 
+/** HATEOAS interface */
+export interface Hateoas {
+  _links: Link[];
+}
+
 /**
  * HATEOAS link
  * 
@@ -18,4 +23,6 @@ export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 export type Rel
   = 'user-self'
   | 'user-emotions'
-  | 'user-days';
+  | 'user-days'
+  | 'day-emotions'
+  | 'create-day';
