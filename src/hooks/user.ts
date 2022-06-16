@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import config from '../config/config';
 import { User } from '../types/data';
 import { Response } from '../types/responses';
 import { useQuery } from './query';
@@ -6,18 +7,22 @@ import { useQuery } from './query';
 /**
  * User hook
  * 
- * @param id User id
+ * @param username Username
  * @returns User
  */
-export const useUser = (id: string) => {
-  const [user, setUser] = useState<User>(null);
+export const useUser = (username: string) => {
+  const { api } = config;
+  const [user, setUser] = useState<User>();
   const query = useQuery();
 
   useEffect(() => {
-    query.get<Response>(`http://localhost:8080/users/${id}`)
-      .then((res) => setUser(res.data.user))
+    query.get<Response>(`${api.url}${api.endpoints.users}/${username}`)
+      .then((res) => {
+        setUser(res.data.user);
+      })
       .catch(console.error);
-  }, [id, query]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return user;
 }
