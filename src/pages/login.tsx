@@ -1,8 +1,11 @@
+import config from '../config/config';
+
 /** Login page */
 export const LoginPage = () => {
   
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:8080/auth/google?platform=web';
+    const { api } = config;
+    window.location.href = `${api.url}${api.endpoints.googleAuth}`;
   }
 
   return (
