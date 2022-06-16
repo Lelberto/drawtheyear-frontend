@@ -19,7 +19,7 @@ export const Router: FC = () => {
     <Routes>
       <Route path="/" element={<AppPage />}>
         <Route path="user" element={<Outlet />}>
-          <Route path=":userId" element={<UserPage />} >
+          <Route path=":username" element={<UserPage />} >
             <Route path="grid" element={<GridPage />} />
           </Route>
         </Route>
