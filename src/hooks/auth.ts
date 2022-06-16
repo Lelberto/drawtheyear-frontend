@@ -1,13 +1,11 @@
-import { useContext } from 'react'
-import { AuthContext } from '../contexts/auth'
-import { User } from '../types/data'
+import { useContext } from 'react';
+import { AuthContext } from '../contexts/auth';
 
 /**
  * Authentication hook
  * 
- * This hook uses the authentication context to get the authenticated user.
+ * This hook wraps the authentication context.
  */
-export const useAuth = (): User => {
-  const { authUser } = useContext(AuthContext);
-  return authUser;
+export const useAuth = () => {
+  return useContext(AuthContext);
 }

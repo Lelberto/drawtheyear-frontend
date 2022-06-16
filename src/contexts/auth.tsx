@@ -44,14 +44,22 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     localStorage.setItem(LocalStorageKey.REFRESH_TOKEN, refresh_token);
   }
 
+  const clearTokens = () => {
+    localStorage.removeItem(LocalStorageKey.ACCESS_TOKEN);
+    localStorage.removeItem(LocalStorageKey.REFRESH_TOKEN);
+  }
+
   useEffect(() => {
     const refreshToken = localStorage.getItem(LocalStorageKey.REFRESH_TOKEN);
     if (refreshToken) {
       updateTokens(refreshToken).then(() => {
         refreshAuthUser()
           .then(() => console.log('User authenticated'))
-          .catch((err: AxiosError) => console.error(err.response.data));
-      }).catch((err: AxiosError) => console.error(err.response.data));
+          .catch((err: AxiosError) => console.error('Could not refresh authenticated user:', err.response.data));
+      }).catch((err: AxiosError) => {
+        clearTokens();
+        console.error('Could not update authentication tokens:', err.response.data)
+      });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
