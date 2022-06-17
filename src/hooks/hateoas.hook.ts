@@ -1,4 +1,4 @@
-import { Link, Rel } from '../types/hateoas';
+import { Link } from '../types/hateoas';
 import { EntryPointResponse, Response } from '../types/responses';
 import { useQuery } from './query.hook';
 
@@ -12,7 +12,7 @@ import { useQuery } from './query.hook';
 export const useHateoas = () => {
   const query = useQuery();
 
-  const fetch = async <R extends Response, B = any>(links: Link[], rel: Rel) => {
+  const fetch = async <R extends Response, B = any>(links: Link[] = [], rel: string) => {
     const link = links.find(link => link.rel === rel);
     if (!link) {
       throw new Error(`Link with rel ${rel} not found`);
@@ -45,8 +45,8 @@ export const useHateoas = () => {
    * @param rel Rel to search
    * @returns True if the rel is included into links, false otherwise
    */
-  const hasLink = (links: Link[] = [], rel: Rel) => {
-    return links.some(link => link.rel === rel);
+  const hasLink = (links: Link[] = [], rel: string | RegExp) => {
+    return links.some(link => (typeof rel === 'string') ? (link.rel === rel) : link.rel.match(rel));
   }
 
   return { fetch, fetchEntryPoint, hasLink };
