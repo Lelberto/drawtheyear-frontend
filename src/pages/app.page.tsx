@@ -1,10 +1,13 @@
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 
-/** Application page */
+/**
+ * Application page
+ * 
+ * @path /
+ */
 export const AppPage: FC = () => (
   <div>
-    Connected !
     <Outlet />
   </div>
 );

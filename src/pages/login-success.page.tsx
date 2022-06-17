@@ -1,14 +1,16 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { AuthContext } from '../contexts/auth';
+import { useAuth } from '../hooks/auth.hook';
 
 /**
  * Login success page
  * 
  * This page is used as callback for authentication.
+ * 
+ * @path /login-success
  */
 export const LoginSuccessPage = () => {
-  const auth = useContext(AuthContext);
+  const auth = useAuth();
   const [queryParams] = useSearchParams();
   const navigate = useNavigate();
   
@@ -16,9 +18,7 @@ export const LoginSuccessPage = () => {
     if (queryParams.has('refreshToken')) {
       const refreshToken = queryParams.get('refreshToken');
       auth.updateTokens(refreshToken).then(() => {
-        auth.refreshAuthUser().then(() => {
-          navigate('/', { replace: true })
-        }).catch(console.error);
+        navigate('/', { replace: true });
       }).catch(console.error);
     } else {
       navigate('/', { replace: true });

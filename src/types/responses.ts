@@ -1,9 +1,21 @@
 /** API response types */
 
-import { Link } from './hateoas';
+import { User } from './data';
+import { Hateoas } from './hateoas';
 
 /** Base response */
 export type Response = {
   data: any;
-  links: Link[];
+}
+
+/** Entry point response */
+export type EntryPointResponse = {
+  data: Hateoas;
+}
+
+/** Users response */
+export type UsersResponse = {
+  data: {
+    users: User[]
+  };
 }

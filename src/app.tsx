@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { AuthContextProvider } from './contexts/auth';
+import { AuthContextProvider } from './contexts/auth.context';
 import { Router } from './router';
 
 /** Application Component */

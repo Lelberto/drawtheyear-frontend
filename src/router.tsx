@@ -1,11 +1,11 @@
 import { FC, useContext } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
-import { AuthContext } from './contexts/auth';
-import { AppPage } from './pages/app';
-import { GridPage } from './pages/grid';
-import { LoginPage } from './pages/login';
-import { LoginSuccessPage } from './pages/login-success';
-import { UserPage } from './pages/user';
+import { AuthContext } from './contexts/auth.context';
+import { AppPage } from './pages/app.page';
+import { GridPage } from './pages/grid.page';
+import { LoginSuccessPage } from './pages/login-success.page';
+import { LoginPage } from './pages/login.page';
+import { UserPage } from './pages/user.page';
 
 /** 
  * Router component
@@ -19,7 +19,7 @@ export const Router: FC = () => {
     <Routes>
       <Route path="/" element={<AppPage />}>
         <Route path="user" element={<Outlet />}>
-          <Route path=":userId" element={<UserPage />} >
+          <Route path=":username" element={<UserPage />} >
             <Route path="grid" element={<GridPage />} />
           </Route>
         </Route>

@@ -1,6 +1,5 @@
-import moment from 'moment';
 import { useEffect, useState } from 'react';
-import { useQuery } from '../../../hooks/query';
+import { useHateoas } from '../../../hooks/hateoas.hook';
 import { Day, Emotion } from '../../../types/data';
 import { Cell } from './cell';
 
@@ -8,6 +7,7 @@ import { Cell } from './cell';
 export type DayCellContentProps = {
   dayNumber: number;
   day?: Day;
+  onClick?: (day?: Day) => void;
 }
 
 /**
@@ -15,21 +15,33 @@ export type DayCellContentProps = {
  * 
  * @extends Cell
  */
-export const DayCell = ({ dayNumber, day }: DayCellContentProps) => {
-  const query = useQuery();
+export const DayCell = ({ dayNumber, day, onClick }: DayCellContentProps) => {
+  const hateoas = useHateoas();
   const [emotions, setEmotions] = useState<Emotion[]>([]);
 
   useEffect(() => {
     if (day) {
-      query.get(`http://localhost:8080/users/jerme/days/${moment(day.date).format('YYYY-MM-DD')}/emotions`)
+      hateoas.fetch(day._links, 'day-emotions')
         .then(res => setEmotions(res.data.emotions))
         .catch(console.error);
     }
   }, [dayNumber, day]);
+
+  const handleClick = () => {
+    if (day && hateoas.hasLink(day._links, 'day-emotions')) {
+      // TODO Day details
+    } else if (hateoas.hasLink(day._links, 'create-day')) {
+      // TODO Create day
+    }
+  }
   
   return (
     <Cell>
-      <div style={{ backgroundColor: emotions.length ? emotions[0].color : '#00000000' }}>
+      <div
+        className="cursor-pointer"
+        style={{ backgroundColor: emotions.length ? emotions[0].color : '#00000000' }}
+        onClick={() => onClick && onClick(day)}
+      >
         {dayNumber}
       </div>
     </Cell>
