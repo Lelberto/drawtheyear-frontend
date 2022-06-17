@@ -1,3 +1,4 @@
+import { Grid } from '../components/grid/grid';
 import { useUser } from '../hooks/user.hook';
 
 /**
@@ -7,8 +8,10 @@ import { useUser } from '../hooks/user.hook';
  */
 export const GridPage = () => {
   const user = useUser();
+  
   return (
-    <>{user?.name}</>
-    // <Grid user={authUser} />
+    <div>
+      <Grid user={user} />
+    </div>
   );
 }

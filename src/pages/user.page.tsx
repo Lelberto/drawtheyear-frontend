@@ -35,9 +35,9 @@ export const UserPage = () => {
 
   return (
     <div>
-      <button onClick={handleShowGrid} disabled={!hateoas.hasLink(user?._links, 'user-days')}>Show grid</button>
+      <button onClick={handleShowGrid} disabled={!hateoas.hasLink(user?._links, /user-days-\d{4,}/)}>Show grid</button>
       <h1>{user?.username}</h1>
-      <Outlet context={user} />
+      <Outlet context={{ user }} />
     </div>
   );
 }
