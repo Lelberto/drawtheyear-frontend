@@ -1,10 +1,14 @@
-import { Grid } from '../components/grid/grid';
-import { useAuth } from '../hooks/auth';
+import { useUser } from '../hooks/user.hook';
 
-/** Grid page */
+/**
+ * Grid page
+ * 
+ * @path /user/`:username`/grid
+ */
 export const GridPage = () => {
-  const { authUser } = useAuth(); // TODO Make user by /user/:userId/grid
+  const user = useUser();
   return (
-    <Grid user={authUser} />
+    <>{user?.name}</>
+    // <Grid user={authUser} />
   );
 }
