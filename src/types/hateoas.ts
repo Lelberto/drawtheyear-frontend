@@ -21,7 +21,8 @@ export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 /** HATEOAS rel */
 export type Rel
-  = 'user-self'
+  = 'users'
+  | 'user-self'
   | 'user-emotions'
   | 'user-days'
   | 'day-emotions'
