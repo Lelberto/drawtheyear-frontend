@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import config from '../config/config';
-import { useQuery } from '../hooks/query';
+import { useQuery } from '../hooks/query.hook';
 import { User } from '../types/data';
 import { LocalStorageKey } from '../types/local-storage';
 
