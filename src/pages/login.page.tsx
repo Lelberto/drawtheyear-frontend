@@ -1,6 +1,10 @@
 import config from '../config/config';
 
-/** Login page */
+/**
+ * Login page
+ * 
+ * @path /login
+ */
 export const LoginPage = () => {
   
   const handleGoogleLogin = () => {

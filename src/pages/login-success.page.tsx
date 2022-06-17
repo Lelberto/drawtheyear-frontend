@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useAuth } from '../hooks/auth';
+import { useAuth } from '../hooks/auth.hook';
 
 /**
  * Login success page
  * 
  * This page is used as callback for authentication.
+ * 
+ * @path /login-success
  */
 export const LoginSuccessPage = () => {
   const auth = useAuth();
