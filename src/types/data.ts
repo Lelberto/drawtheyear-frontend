@@ -18,7 +18,7 @@ export type Emotion = Hateoas & {
 
 /** Day */
 export type Day = Hateoas & {
-  date: Date;
+  date: string; // YYYY-MM-DD
   description: string;
   userId: string;
 }
