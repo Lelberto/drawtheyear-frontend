@@ -1,5 +1,6 @@
 import { padStart } from 'lodash';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useHateoas } from '../../../hooks/hateoas.hook';
 import { Day, Emotion } from '../../../types/data';
 import { Cell } from './cell';
@@ -17,6 +18,7 @@ export type DayCellContentProps = {
 export const DayCell = ({ day }: DayCellContentProps) => {
   const hateoas = useHateoas();
   const [emotions, setEmotions] = useState<Emotion[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (day) {
@@ -27,7 +29,7 @@ export const DayCell = ({ day }: DayCellContentProps) => {
   }, [day]);
 
   const handleCellClick = () => {
-    console.log(day);
+    navigate(`../day/${day.date}`);
   }
   
   return (

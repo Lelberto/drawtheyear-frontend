@@ -1,4 +1,6 @@
 import { padStart } from 'lodash';
+import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 import { Cell } from './cell';
 
 export type EmptyCellProps = {
@@ -11,8 +13,10 @@ export type EmptyCellProps = {
  * @extends Cell
  */
 export const EmptyCell = ({ date }: EmptyCellProps) => {
+  const navigate = useNavigate();
+
   const handleCellClick = () => {
-    console.log(date);
+    navigate(`../day/${moment(date).format('YYYY-MM-DD')}`);
   }
 
   return (
