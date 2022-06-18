@@ -1,0 +1,11 @@
+/* CSS fonts */
+
+@tailwind base;
+
+@layer base {
+  @font-face {
+    font-family: 'Schoolwork';
+    src: url('../fonts/schoolwork-regular.ttf') format('truetype');
+    size-adjust: 200%;
+  }
+}
