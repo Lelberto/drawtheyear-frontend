@@ -1,7 +1,8 @@
 import { FC, useContext } from 'react';
-import { Outlet, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AuthContext } from './contexts/auth.context';
 import { AppPage } from './pages/app.page';
+import { DayPage } from './pages/day.page';
 import { GridPage } from './pages/grid.page';
 import { LoginSuccessPage } from './pages/login-success.page';
 import { LoginPage } from './pages/login.page';
@@ -18,19 +19,16 @@ export const Router: FC = () => {
   return authUser ? (
     <Routes>
       <Route path="/" element={<AppPage />}>
-        <Route path="user" element={<Outlet />}>
-          <Route path=":username" element={<UserPage />} >
-            <Route path="grid" element={<GridPage />} />
-          </Route>
+        <Route path="user/:username" element={<UserPage />} >
+          <Route path="grid" element={<GridPage />} />
+          <Route path="day/:date" element={<DayPage />} />
         </Route>
       </Route>
     </Routes>
   ) : (
     <Routes>
-      <Route path="/" element={<Outlet />}>
-        <Route path="login" element={<LoginPage />} />
-        <Route path="login-success" element={<LoginSuccessPage />} />
-      </Route>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/login-success" element={<LoginSuccessPage />} />
     </Routes>
   );
 }
