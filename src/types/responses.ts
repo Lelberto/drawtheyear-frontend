@@ -1,6 +1,6 @@
 /** API response types */
 
-import { User } from './data';
+import { Day, User } from './data';
 import { Hateoas } from './hateoas';
 
 /** Base response */
@@ -16,6 +16,13 @@ export type EntryPointResponse = {
 /** Users response */
 export type UsersResponse = {
   data: {
-    users: User[]
+    users: User[];
+  };
+}
+
+/** Days response */
+export type DaysResponse = {
+  data: {
+    days: Day[];
   };
 }
