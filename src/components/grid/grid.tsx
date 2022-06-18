@@ -1,9 +1,10 @@
 import { padStart } from 'lodash';
 import moment from 'moment';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useHateoas } from '../../hooks/hateoas.hook';
 import { Day, User } from '../../types/data';
+import { Cell } from './cells/cell';
 import { DayCell } from './cells/day-cell';
 import { EmptyCell } from './cells/empty-cell';
 
@@ -17,7 +18,6 @@ export const Grid = ({ user }: GridProps) => {
   const [queryParams] = useSearchParams();
   const hateoas = useHateoas();
   const [days, setDays] = useState<Day[]>([]);
-  const navigate = useNavigate();
   
   const year = useMemo(
     () => parseInt(queryParams.get('year')) || new Date().getFullYear(),
@@ -39,23 +39,19 @@ export const Grid = ({ user }: GridProps) => {
         const dateFormat = `${year}-${padStart((monthNumber).toFixed(), 2, '0')}-${padStart((dayNumber).toFixed(), 2, '0')}`;
         const date = moment(dateFormat, true);
         if (date.isValid()) {
-          const day = days.find(day => moment(day.date).format('YYYY-MM-DD') === dateFormat);
-          cells.push(<DayCell key={dateFormat} dayNumber={dayNumber} day={day} onClick={handleDayCellClick} />);
+          const day = days.find(day => day.date === dateFormat);
+          if (day) {
+            cells.push(<DayCell key={dateFormat} day={day} />);
+          } else {
+            cells.push(<EmptyCell key={dateFormat} date={date.toDate()} />);
+          }
         } else {
-          cells.push(<EmptyCell key={dateFormat} />);
+          cells.push(<Cell key={dateFormat}>---</Cell>);
         }
       }
     }
     return cells;
   }, [days, year]);
-
-  const handleDayCellClick = (day?: Day) => {
-    if (day && hateoas.hasLink(day._links, 'day-emotions')) {
-      navigate(`/user/${user.id}/day/${day.date}`);
-    } else {
-      navigate(`/user/${user.id}/day/new`);
-    }
-  }
 
   return (
     <div className="grid grid-cols-12 gap-4">

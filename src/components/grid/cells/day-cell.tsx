@@ -1,3 +1,4 @@
+import { padStart } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useHateoas } from '../../../hooks/hateoas.hook';
 import { Day, Emotion } from '../../../types/data';
@@ -5,9 +6,7 @@ import { Cell } from './cell';
 
 /** Day cell props */
 export type DayCellContentProps = {
-  dayNumber: number;
-  day?: Day;
-  onClick?: (day?: Day) => void;
+  day: Day;
 }
 
 /**
@@ -15,7 +14,7 @@ export type DayCellContentProps = {
  * 
  * @extends Cell
  */
-export const DayCell = ({ dayNumber, day, onClick }: DayCellContentProps) => {
+export const DayCell = ({ day }: DayCellContentProps) => {
   const hateoas = useHateoas();
   const [emotions, setEmotions] = useState<Emotion[]>([]);
 
@@ -25,24 +24,19 @@ export const DayCell = ({ dayNumber, day, onClick }: DayCellContentProps) => {
         .then(res => setEmotions(res.data.emotions))
         .catch(console.error);
     }
-  }, [dayNumber, day]);
+  }, [day]);
 
-  const handleClick = () => {
-    if (day && hateoas.hasLink(day._links, 'day-emotions')) {
-      // TODO Day details
-    } else if (hateoas.hasLink(day._links, 'create-day')) {
-      // TODO Create day
-    }
+  const handleCellClick = () => {
+    console.log(day);
   }
   
   return (
-    <Cell>
+    <Cell onClick={handleCellClick}>
       <div
         className="cursor-pointer"
         style={{ backgroundColor: emotions.length ? emotions[0].color : '#00000000' }}
-        onClick={() => onClick && onClick(day)}
       >
-        {dayNumber}
+        {padStart(new Date(day.date).getDate().toFixed(), 2, '0')}
       </div>
     </Cell>
   );
