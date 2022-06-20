@@ -5,8 +5,13 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { App } from './app';
 import './assets/css/index.css';
+import icons from './config/icons';
 import reportWebVitals from './report-web-vitals';
 
+// Loading assets
+icons();
+
+// React render
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
