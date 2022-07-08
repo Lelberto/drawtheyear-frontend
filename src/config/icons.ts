@@ -5,13 +5,14 @@
  */
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCalendarDays, faFaceGrinBeam, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faBrush, faCalendarDays, faFaceGrinBeam, faHome } from '@fortawesome/free-solid-svg-icons';
 
 /** Loads icons */
 export default () => {
   library.add(
-    faHome,
+    faBrush,
     faCalendarDays,
-    faFaceGrinBeam
+    faFaceGrinBeam,
+    faHome
   );
 }
