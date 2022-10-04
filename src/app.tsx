@@ -1,10 +1,11 @@
-import { FC } from 'react';
-import { AuthContextProvider } from './contexts/auth.context';
-import { Router } from './router';
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
 
-/** Application Component */
-export const App: FC = () => (
-  <AuthContextProvider>
-    <Router />
-  </AuthContextProvider>
-);
+function App() {
+  return (
+    <></>
+  );
+}
+
+export default App;

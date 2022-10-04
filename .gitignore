@@ -3,17 +3,33 @@
 /.pnp
 .pnp.js
 
-# Environment
-*.env
+# Output
+/build
 
 # Testing
 /coverage
 
-# Output
-/build
+# Environment
+.env*
 
-# Misc
-.DS_Store
+# Editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# OS
+.DS_Store

@@ -1,23 +1,15 @@
-/** Application entry point */
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-import { App } from './app';
-import './assets/css/index.css';
-import icons from './config/icons';
-import reportWebVitals from './report-web-vitals';
+import './index.css';
+import App from './app';
+import reportWebVitals from './reportWebVitals';
 
-// Loading assets
-icons();
-
-// React render
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <App />
   </React.StrictMode>
 );
 
