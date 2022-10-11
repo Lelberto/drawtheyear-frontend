@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Roboto-Regular';
+  src: url('./assets/fonts/roboto-regular.ttf');
+}
+
+html, body {
+  @apply bg-dark;
+  @apply font-roboto;
+  @apply text-white;
+}
