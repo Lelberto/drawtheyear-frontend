@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { LocalStorageKey } from '../../types/global/local-storage.types';
+import { LocalStorageKey } from '../../types/local-storage.types';
 
 export const LoginCallbackView = () => {
 
