@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: 'Roboto-Regular';
-  src: url('./assets/fonts/roboto-regular.ttf');
+  src: url('../fonts/roboto-regular.ttf');
 }
 
 html, body {
