@@ -1,5 +1,6 @@
-import { useContext, useEffect } from 'react';
-import { AuthContext } from '../components/contexts/auth.context';
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../contexts/auth.context';
+import { User } from '../types/data.types';
 import { useQuery } from './query.hook';
 
 export const useAuthUser = () => {
@@ -18,4 +19,15 @@ export const useAuthUser = () => {
   }, []);
 
   return authUser;
+}
+
+export const useUser = (username: string) => {
+  const [user, setUser] = useState<User>();
+  const query = useQuery();
+  useEffect(() => {
+    query.users.findByUsername(username)
+      .then(res => setUser(res.data))
+      .catch(err => console.error(`Could not find user with username ${username}`, err));
+  }, [username]);
+  return user;
 }

@@ -65,7 +65,8 @@ export const useQuery = () => {
       accessToken: (refreshToken: string) => login(refreshToken)
     },
     users: {
-      find: () => query<DataResponse<User[]>>('GET', `${config.apiUrl}/users`),
+      find: () => query<DataResponse<User[]>>('GET', `${config.apiUrl}/users`, { auth: true }),
+      findByUsername: (username: string) => query<DataResponse<User>>('GET', `${config.apiUrl}/users/${username}`, { auth: true }),
       me: {
         find: () => query<DataResponse<User>>('GET', `${config.apiUrl}/me`, { auth: true })
       }
