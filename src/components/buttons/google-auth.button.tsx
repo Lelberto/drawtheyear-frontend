@@ -3,7 +3,7 @@ import { config } from '../../config/config';
 export const GoogleAuthButton = () => {
   
   const auth = () => {
-    window.location.href = `${config.apiUrl}${config.endpoints.googleAuth}`;
+    window.location.href = `${config.apiUrl}${config.endpoints.auth.google}`;
   }
 
   return (

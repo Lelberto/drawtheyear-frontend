@@ -1,27 +1,23 @@
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { LocalStorageKey } from '../../types/local-storage.types';
+import { useQuery } from '../../hooks/query.hook';
 
 export const LoginCallbackView = () => {
 
   const [ query ] = useSearchParams();
   const navigate = useNavigate();
+  const { auth: { accessToken } } = useQuery();
 
   useEffect(() => {
-    if (query.has('accessToken') && query.has('refreshToken')) {
-      const accessToken = query.get('accessToken');
+    if (query.has('refreshToken')) {
       const refreshToken = query.get('refreshToken');
-      storeTokens(accessToken, refreshToken);
-      navigate('/login/success');
+      accessToken(refreshToken)
+        .then(() => navigate('/login/success'))
+        .catch(() => navigate('/login/failure'));
     } else {
       navigate('/login/failure');
     }
   }, []);
-
-  const storeTokens = (accessToken: string, refreshToken: string) => {
-    localStorage.setItem(LocalStorageKey.ACCESS_TOKEN, accessToken);
-    localStorage.setItem(LocalStorageKey.REFRESH_TOKEN, refreshToken);
-  }
   
   return (
     <p>Redirecting...</p>

@@ -1,4 +1,6 @@
 export enum LocalStorageKey {
   ACCESS_TOKEN = 'access-token',
-  REFRESH_TOKEN = 'refresh-token'
+  REFRESH_TOKEN = 'refresh-token',
+  TIMESTAMP = 'timestamp',
+  EXPIRATION = 'expiration'
 }

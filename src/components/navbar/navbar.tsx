@@ -2,13 +2,17 @@ import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useGetMediaQuery } from '../../hooks/media-query.hook';
+import { useAuthUser } from '../../hooks/user.hook';
+import { User } from '../../types/data.types';
 import { ChildrenProps } from '../../types/props.types';
+import { NavbarLink } from './navbar-link';
 
 export type NavbarProps = ChildrenProps;
 
 export const Navbar = ({ children }: NavbarProps) => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const mediaQuery = useGetMediaQuery();
+  const authUser = useAuthUser();
 
   const toggleMenu = () => setShowMenu(!showMenu);
 
@@ -38,13 +42,7 @@ export const Navbar = ({ children }: NavbarProps) => {
             </div>
           </div>
           <div>
-            <Link to="/login">
-              <img
-                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                alt="Profile picture"
-                className="w-10 rounded-full"
-              />
-            </Link>
+            {authUser ? <NavbarUserMenu user={authUser} /> : <NavbarLoginMenu />}
           </div>
         </div>
         <div className={menuClassName}>
@@ -56,3 +54,24 @@ export const Navbar = ({ children }: NavbarProps) => {
     </nav>
   );
 }
+
+type NavbarUserMenuProps = {
+  user: User;
+}
+
+const NavbarUserMenu = ({ user }: NavbarUserMenuProps) => (
+  <Link to={`/user/${user.username}`}>
+    <div className="flex gap-x-2 justify-center items-center">
+      <span className="hidden sm:block">{user.name}</span>
+      <img
+        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+        alt="Profile picture"
+        className="w-10 rounded-full"
+      />
+    </div>
+  </Link>
+);
+
+const NavbarLoginMenu = () => (
+  <NavbarLink to="/login">Connexion / Inscription</NavbarLink>
+);
