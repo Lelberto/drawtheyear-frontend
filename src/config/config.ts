@@ -4,5 +4,8 @@ export const config = {
     auth: {
       google: process.env.REACT_APP_ENDPOINT_GOOGLE_AUTH || '/auth/google?platform=web'
     }
+  },
+  days: {
+    dateFormat: 'YYYY-MM-DD'
   }
 }
