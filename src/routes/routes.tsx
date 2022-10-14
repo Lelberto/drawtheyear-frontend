@@ -7,6 +7,7 @@ import { LoginSuccessView } from '../views/login/login-success.view';
 import { LoginView } from '../views/login/login.view';
 import { DayView } from '../views/days/day.view';
 import { UserView } from '../views/users/user.view';
+import { GridView } from '../views/grids/grid.view';
 
 export const routes: RouteObject[] = [
   {
@@ -33,6 +34,10 @@ export const routes: RouteObject[] = [
         path: 'user/:username',
         element: <UserView />,
         children: [
+          {
+            path: 'grid',
+            element: <GridView />
+          },
           {
             path: 'day/:dayDate',
             element: <DayView />

@@ -1,14 +1,8 @@
-import { Outlet, useParams } from 'react-router-dom';
-import { Grid } from '../../components/grid/grid';
-import { useUser } from '../../hooks/user.hook';
+import { Outlet } from 'react-router-dom';
 
 export const UserView = () => {
-  const { username } = useParams();
-  const user = useUser(username);
-
   return (
     <div className="m-8">
-      <Grid user={user} />
       <Outlet />
     </div>
   );
