@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { config } from '../config/config';
-import { User } from '../types/data.types';
+import { Day, User } from '../types/data.types';
 import { LocalStorageKey } from '../types/local-storage.types';
 import { AccessTokenResponse, DataResponse, Response } from '../types/response.types';
 
@@ -70,6 +70,9 @@ export const useQuery = () => {
       me: {
         find: () => query<DataResponse<User>>('GET', `${config.apiUrl}/me`, { auth: true })
       }
+    },
+    days: {
+      find: (user: User, year?: number) => query<DataResponse<Day[]>>('GET', `${config.apiUrl}/users/${user.username}/days?year=${year}`, { auth: true })
     }
   };
 }

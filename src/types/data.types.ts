@@ -6,3 +6,14 @@ export interface User extends Entity {
   username: string;
   name: string;
 }
+
+export interface Emotion extends Entity {
+  name: string;
+  color: string;
+}
+
+export interface Day extends Entity {
+  date: string;
+  resume: string;
+  emotions: Emotion[];
+}
