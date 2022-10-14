@@ -11,6 +11,6 @@ export const useDays = (user: User, year: number) => {
         .then(res => setDays(res.data))
         .catch(err => console.error('Could not find days', err));
     }
-  }, [user]);
+  }, [user, year]);
   return days;
 }

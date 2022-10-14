@@ -6,6 +6,7 @@ export const config = {
     }
   },
   days: {
-    dateFormat: 'YYYY-MM-DD'
+    dateFormat: 'YYYY-MM-DD',
+    minYear: 2017
   }
 }
