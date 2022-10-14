@@ -68,7 +68,8 @@ export const useQuery = () => {
       find: () => query<DataResponse<User[]>>('GET', `${config.apiUrl}/users`, { auth: true }),
       findByUsername: (username: string) => query<DataResponse<User>>('GET', `${config.apiUrl}/users/${username}`, { auth: true }),
       me: {
-        find: () => query<DataResponse<User>>('GET', `${config.apiUrl}/me`, { auth: true })
+        find: () => query<DataResponse<User>>('GET', `${config.apiUrl}/me`, { auth: true }),
+        findDayByDate: (date: string) => query<DataResponse<Day>>('GET', `${config.apiUrl}/me/days/${date}`, { auth: true })
       }
     },
     days: {
