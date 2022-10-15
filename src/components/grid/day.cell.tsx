@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Day, User } from '../../types/data.types';
+import { cssColors } from '../../utils/color.utils';
 
 export type DayCellProps = {
   dayDate: string;
@@ -9,20 +10,7 @@ export type DayCellProps = {
 }
 
 export const DayCell = ({ dayDate, user, day }: DayCellProps) => {
-  const buildBackground = useMemo(() => {
-    if (day) {
-      const colors = day.emotions.map(emotion => emotion.color);
-      switch (colors.length) {
-        case 0: return '#FF0000';
-        case 1: return colors[0];
-        default: {
-          const gradientColors = colors.map((color, i, arr) => `${color} ${(i + 1) / arr.length * 100}%`);
-          return `linear-gradient(340deg, ${gradientColors.join(', ')})`;
-        }
-      }
-    }
-    return '#FF0000';
-  }, [day]);
+  const buildBackground = useMemo(() => day ? cssColors(...day.emotions.map(emotion => emotion.color)) : '#000000', [day]);
 
   return (
     <Link
