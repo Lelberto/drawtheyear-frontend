@@ -34,7 +34,7 @@ export const Grid: FC<GridProps> = ({ user }: GridProps) => {
       }
     }
     return cells;
-  }, [days]);
+  }, [days, year]);
 
   const previousYear = () => {
     setYear(year - 1);

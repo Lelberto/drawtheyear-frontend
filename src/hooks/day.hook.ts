@@ -3,29 +3,46 @@ import { Day, User } from '../types/data.types';
 import { useQuery } from './query.hook';
 import { useAuthUser } from './user.hook';
 
-export const useDays = (user: User, year: number) => {
+type DaysHookOptions = {
+  checkAuthUser?: boolean;
+}
+export const useDays = (user: User, year: number, options: DaysHookOptions = { checkAuthUser: true }) => {
   const [days, setDays] = useState<Day[]>([]);
+  const authUser = useAuthUser();
   const query = useQuery();
   useEffect(() => {
     if (user) {
-      query.days.find(user, year)
-        .then(res => setDays(res.data))
-        .catch(err => console.error('Could not find days', err));
+      if (options.checkAuthUser && user.id === authUser?.id) {
+        query.users.me.findDays(year)
+          .then(res => setDays(res.data))
+          .catch(err => console.error('Could not find days', err));
+      } else {
+         query.users.findDays(user.username, year)
+          .then(res => setDays(res.data))
+          .catch(err => console.error('Could not find days', err));
+      }
     }
-  }, [user, year]);
+  }, [user, authUser, year]);
   return days;
 }
 
-export const useDay = (date: string) => {
+type DayHookOptions = DaysHookOptions;
+export const useDay = (user: User, date: string, options: DayHookOptions = { checkAuthUser: true }) => {
   const [day, setDay] = useState<Day>();
-  const user = useAuthUser();
+  const authUser = useAuthUser();
   const query = useQuery();
   useEffect(() => {
     if (user) {
-      query.users.me.findDayByDate(date)
-        .then(res => setDay(res.data))
-        .catch(err => console.error('Could not find day', err));
+      if (options.checkAuthUser && user.id === authUser?.id) {
+        query.users.me.findDayByDate(date)
+          .then(res => setDay(res.data))
+          .catch(err => console.error('Could not find day', err));
+      } else {
+        query.users.findDayByDate(user.username, date)
+          .then(res => setDay(res.data))
+          .catch(err => console.error('Could not find day', err));
+      }
     }
-  }, [user, date]);
+  }, [user, authUser, date]);
   return day;
 }
