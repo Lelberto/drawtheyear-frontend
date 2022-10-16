@@ -1,8 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { config } from '../config/config';
-import { Day, User } from '../types/data.types';
+import { Day, Emotion, User } from '../types/data.types';
 import { LocalStorageKey } from '../types/local-storage.types';
-import { AccessTokenResponse, DataResponse, Response } from '../types/response.types';
+import { AccessTokenResponse, CreationResponse, DataResponse, Response } from '../types/response.types';
 
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 type QueryOptions = {
@@ -36,7 +36,7 @@ export const useQuery = () => {
         res = await axios.put(url, options.body, config);
         break;
       case 'PATCH':
-        res = await axios.put(url, options.body, config);
+        res = await axios.patch(url, options.body, config);
         break;
       case 'DELETE':
         res = await axios.put(url, options.body, config);
@@ -68,11 +68,19 @@ export const useQuery = () => {
       find: () => query<DataResponse<User[]>>('GET', `${config.apiUrl}/users`, { auth: true }),
       findByUsername: (username: string) => query<DataResponse<User>>('GET', `${config.apiUrl}/users/${username}`, { auth: true }),
       findDays: (username: string, year?: number) => query<DataResponse<Day[]>>('GET', `${config.apiUrl}/users/${username}/days?year=${year}`, { auth: true }),
+      findEmotions: (username: string) => query<DataResponse<Emotion[]>>('GET', `${config.apiUrl}/users/${username}/emotions`, { auth: true }),
       findDayByDate: (username: string, dayDate: string) => query<DataResponse<Day>>('GET', `${config.apiUrl}/users/${username}/days/${dayDate}`, { auth: true }),
+      updateDay: (username: string, dayDate: string, data: Partial<Day>) => query<CreationResponse>('PATCH', `${config.apiUrl}/users/${username}/days/${dayDate}`, { auth: true, body: data }),
+      addEmotionToDay: (username: string, dayDate: string, emotionId: string) => query<CreationResponse>('PATCH', `${config.apiUrl}/users/${username}/days/${dayDate}/emotions/add`, { auth: true, body: { emotionId } }),
+      removeEmotionFromDay: (username: string, dayDate: string, emotionId: string) => query<CreationResponse>('PATCH', `${config.apiUrl}/users/${username}/days/${dayDate}/emotions/remove`, { auth: true, body: { emotionId } }),
       me: {
         find: () => query<DataResponse<User>>('GET', `${config.apiUrl}/me`, { auth: true }),
+        findEmotions: () => query<DataResponse<Emotion[]>>('GET', `${config.apiUrl}/me/emotions`, { auth: true }),
         findDays: (year?: number) => query<DataResponse<Day[]>>('GET', `${config.apiUrl}/me/days?year=${year}`, { auth: true }),
-        findDayByDate: (dayDate: string) => query<DataResponse<Day>>('GET', `${config.apiUrl}/me/days/${dayDate}`, { auth: true })
+        findDayByDate: (dayDate: string) => query<DataResponse<Day>>('GET', `${config.apiUrl}/me/days/${dayDate}`, { auth: true }),
+        updateDay: (dayDate: string, data: Partial<Day>) => query<CreationResponse>('PATCH', `${config.apiUrl}/me/days/${dayDate}`, { auth: true, body: data }),
+        addEmotionToDay: (dayDate: string, emotionId: string) => query<CreationResponse>('PATCH', `${config.apiUrl}/me/days/${dayDate}/emotions/add`, { auth: true, body: { emotionId } }),
+        removeEmotionFromDay: (dayDate: string, emotionId: string) => query<CreationResponse>('PATCH', `${config.apiUrl}/me/days/${dayDate}/emotions/remove`, { auth: true, body: { emotionId } })
       }
     }
   };
