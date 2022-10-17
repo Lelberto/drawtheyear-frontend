@@ -1,3 +1,5 @@
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Emotion } from '../../../types/data.types';
 import { isLight } from '../../../utils/color.utils';
 
@@ -15,14 +17,17 @@ export const EmotionSelection = ({ unselectedEmotions = [], selectedEmotions = [
         {unselectedEmotions.map((emotion, i) => {
           const textColor = isLight(emotion.color) ? 'text-dark' : 'text-light';
           return (
-            <button
-              key={i}
-              className={`px-2 py-1 ${textColor}`}
-              style={{ backgroundColor: emotion.color }}
-              onClick={() => onSelect(emotion)}
-            >
-              {emotion.name}
-            </button>
+            <div key={i} className="flex justify-between px-2 py-1" style={{ backgroundColor: emotion.color }}>
+              <button
+                className={`flex-1 text-start ${textColor}`}
+                onClick={() => onSelect(emotion)}
+              >
+                {emotion.name}
+              </button>
+              <button>
+                <FontAwesomeIcon icon={faEdit} className={textColor} />
+              </button>
+            </div>
           )
         })}
       </div>
@@ -31,15 +36,18 @@ export const EmotionSelection = ({ unselectedEmotions = [], selectedEmotions = [
         {selectedEmotions.map((emotion, i) => {
           const textColor = isLight(emotion.color) ? 'text-dark' : 'text-light';
           return (
-            <button
-              key={i}
-              className={`px-2 py-1 ${textColor}`}
-              style={{ backgroundColor: emotion.color }}
-              onClick={() => onUnselect(emotion)}
-            >
-              {emotion.name}
-            </button>
-          )
+            <div key={i} className="flex justify-between px-2 py-1" style={{ backgroundColor: emotion.color }}>
+              <button
+                className={`flex-1 text-start ${textColor}`}
+                onClick={() => onUnselect(emotion)}
+              >
+                {emotion.name}
+              </button>
+              <button>
+                <FontAwesomeIcon icon={faEdit} className={textColor} />
+              </button>
+            </div>
+          );
         })}
       </div>
     </div>
