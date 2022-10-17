@@ -1,13 +1,15 @@
-import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { EmotionBadge } from '../../components/badges/emotion.badge';
+import { VisibilityButton } from '../../components/buttons/visibility.button';
 import { EmotionSelection } from '../../components/forms/days/emotion-selection';
 import { useDay } from '../../hooks/day.hook';
 import { useEmotions } from '../../hooks/emotion.hook';
 import { useAuthUser, useUser } from '../../hooks/user.hook';
+import { Day } from '../../types/data.types';
 import { cssColors, darken } from '../../utils/color.utils';
 import { toLocaleString } from '../../utils/date.utils';
 
@@ -33,11 +35,35 @@ export const DayView = () => {
     }
   }
 
+  const updateDayVisibility = () => {
+    let visibility: Day['visibility'] = day?.visibility;
+    switch (visibility) {
+      case 'private':
+      default:
+        visibility = 'public';
+        break;
+      case 'public':
+        visibility = 'private';
+        break; 
+    }
+    updateDay({ visibility });
+  }
+
   return (
     <div className="space-y-10">
       <div className="p-5 rounded-lg space-y-5" style={{ background: bgColor }}>
-        <div className="flex justify-center">
-          <h1 className="drop-shadow-xl shadow-black">{dayDateValue}</h1>
+        <div className="flex justify-between items-center">
+          <div className="w-24 h-16">
+            <h4>{user?.name}</h4>
+          </div>
+          <div className="h-16">
+            <h1 className="drop-shadow-xl shadow-black">{dayDateValue}</h1>
+          </div>
+          <VisibilityButton
+            visibility={day?.visibility}
+            onClick={() => updateDayVisibility()}
+            disabled={!isAuthUser}
+          />
         </div>
         <div className="flex flex-wrap justify-around gap-2">
           {day?.emotions?.map((emotion, i) => (
@@ -71,6 +97,7 @@ export const DayView = () => {
       <div className="flex max-h-128 space-x-2">
         <div className="flex-auto p-2 border border-light rounded space-y-2">
           <h4 className="text-center">Votre journée</h4>
+          <h5 className="text-secondary text-center font-bold">Coming Soon</h5>
         </div>
         <div className="p-2 border border-light rounded space-y-2 overflow-y-scroll">
           <h4 className="text-center">Émotions</h4>

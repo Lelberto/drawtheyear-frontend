@@ -15,5 +15,6 @@ export interface Emotion extends Entity {
 export interface Day extends Entity {
   date: string;
   resume: string;
+  visibility: 'public' | 'private';
   emotions: Emotion[];
 }
