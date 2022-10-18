@@ -9,7 +9,7 @@ import { EmotionSelection } from '../../components/forms/days/emotion-selection'
 import { useDay } from '../../hooks/day.hook';
 import { useEmotions } from '../../hooks/emotion.hook';
 import { useAuthUser, useUser } from '../../hooks/user.hook';
-import { Day } from '../../types/data.types';
+import { Day, Emotion } from '../../types/data.types';
 import { cssColors, darken } from '../../utils/color.utils';
 import { toLocaleString } from '../../utils/date.utils';
 
@@ -47,6 +47,14 @@ export const DayView = () => {
         break; 
     }
     updateDay({ visibility });
+  }
+
+  const editEmotion = (emotion: Emotion) => {
+    console.log('edit', emotion.name);
+  }
+
+  const createEmotion = () => {
+    console.log('create emotion')
   }
 
   return (
@@ -106,6 +114,8 @@ export const DayView = () => {
             selectedEmotions={day?.emotions}
             onSelect={addEmotion}
             onUnselect={removeEmotion}
+            onEdit={editEmotion}
+            onCreate={createEmotion}
           />
         </div>
       </div>
