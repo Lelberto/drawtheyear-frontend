@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { config } from '../../config/config';
 import { useGetMediaQuery } from '../../hooks/media-query.hook';
 import { useAuthUser } from '../../hooks/user.hook';
 import { User } from '../../types/data.types';
@@ -69,7 +70,7 @@ const NavbarUserMenu = ({ user }: NavbarUserMenuProps) => (
     <div className="flex gap-x-2 justify-center items-center">
       <span className="hidden sm:block">{user.name}</span>
       <img
-        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+        src={user.picture || config.users.defaultPicture}
         alt="Profile picture"
         className="w-10 rounded-full"
       />
