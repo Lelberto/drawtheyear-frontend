@@ -1,3 +1,5 @@
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -20,10 +22,12 @@ export const Navbar = () => {
 
   return (
     <nav>
-      <div className="px-4 border-b border-light">
+      <div className="px-4 border-b border-primary/50">
         <div className="h-16 flex items-center justify-between">
           <div className="block sm:hidden">
-            <button onClick={toggleMenu}>Menu</button>
+            <button onClick={toggleMenu}>
+              <FontAwesomeIcon icon={faBars} />
+            </button>
           </div>
           <div className="flex flex-1 items-center justify-center sm:justify-start">
             <div>

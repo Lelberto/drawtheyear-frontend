@@ -1,3 +1,5 @@
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { padStart } from 'lodash';
 import moment from 'moment';
@@ -47,7 +49,7 @@ export const Grid: FC<GridProps> = ({ user }: GridProps) => {
   const navigationButtonClassName = classNames(
     'p-4',
     'border rounded-md',
-    'bg-black/50 hover:bg-light/25',
+    'bg-black/50 hover:bg-light/25 disabled:bg-red-800',
     'transition-colors duration-200',
     'disabled:cursor-not-allowed'
   );
@@ -60,7 +62,7 @@ export const Grid: FC<GridProps> = ({ user }: GridProps) => {
           onClick={previousYear}
           disabled={year === config.days.minYear}
         >
-          Previous
+          <FontAwesomeIcon icon={faArrowLeft} />
         </button>
         <h1>{year}</h1>
         <button
@@ -68,7 +70,7 @@ export const Grid: FC<GridProps> = ({ user }: GridProps) => {
           onClick={nextYear}
           disabled={year === moment().year()}
         >
-          Next
+          <FontAwesomeIcon icon={faArrowRight} />
         </button>
       </div>
       <div className="grid grid-cols-12 gap-2">
