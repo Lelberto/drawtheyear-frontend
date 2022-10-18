@@ -32,7 +32,7 @@ export const Navbar = () => {
           <div className="flex flex-1 items-center justify-center sm:justify-start">
             <div>
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/2048px-Tailwind_CSS_Logo.svg.png"
+                src={config.app.logo}
                 alt="Logo"
                 className="w-10"
               />
