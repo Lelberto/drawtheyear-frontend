@@ -1,6 +1,5 @@
 import { RouteObject } from 'react-router-dom';
 import { App } from '../app';
-import { CreateDayView } from '../views/days/create-day.view';
 import { LoginCallbackView } from '../views/login/login-callback.view';
 import { LoginFailureView } from '../views/login/login-failure.view';
 import { LoginSuccessView } from '../views/login/login-success.view';
@@ -43,10 +42,6 @@ export const routes: RouteObject[] = [
             element: <DayView />
           }
         ]
-      },
-      {
-        path: 'create-day',
-        element: <CreateDayView />
       }
     ]
   }
