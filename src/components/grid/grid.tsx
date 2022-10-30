@@ -64,7 +64,10 @@ export const Grid: FC<GridProps> = ({ user, year, onPreviousYear, onNextYear }: 
       <div className="flex justify-between">
         <button
           className={navigationButtonClassName}
-          onClick={() => onPreviousYear()}
+          onClick={() => {
+            onPreviousYear();
+            setDays([]);
+          }}
           disabled={year === config.days.minYear}
         >
           <FontAwesomeIcon icon={faArrowLeft} />
@@ -72,7 +75,10 @@ export const Grid: FC<GridProps> = ({ user, year, onPreviousYear, onNextYear }: 
         <h1>{year}</h1>
         <button
           className={navigationButtonClassName}
-          onClick={() => onNextYear()}
+          onClick={() => {
+            onNextYear();
+            setDays([]);
+          }}
           disabled={year === moment().year()}
         >
           <FontAwesomeIcon icon={faArrowRight} />
