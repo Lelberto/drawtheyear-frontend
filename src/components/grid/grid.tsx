@@ -3,20 +3,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { padStart } from 'lodash';
 import moment from 'moment';
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { config } from '../../config/config';
-import { useDays } from '../../hooks/day.hook';
-import { User } from '../../types/data.types';
+import { useDayManager } from '../../hooks/day.hook';
+import { Day, User } from '../../types/data.types';
 import { DayCell } from './day.cell';
 import { EmptyCell } from './empty.cell';
 
 export type GridProps = {
   user: User;
+  year: number;
+  onPreviousYear: () => void;
+  onNextYear: () => void;
 }
 
-export const Grid: FC<GridProps> = ({ user }: GridProps) => {
-  const [year, setYear] = useState(moment().year());
-  const days = useDays(user, year);
+export const Grid: FC<GridProps> = ({ user, year, onPreviousYear, onNextYear }: GridProps) => {
+  const dayManager = useDayManager();
+  const [days, setDays] = useState<Day[]>([]);
   
   const buildCells = useCallback((monthNumber: string) => {
     const cells = [];
@@ -38,13 +41,15 @@ export const Grid: FC<GridProps> = ({ user }: GridProps) => {
     return cells;
   }, [days, year]);
 
-  const previousYear = () => {
-    setYear(year - 1);
+  const refreshDays = () => {
+    if (user) {
+      dayManager.findByYear(user, year)
+        .then(res => setDays(res.data))
+        .catch(err => console.error(err));
+    }
   }
 
-  const nextYear = () => {
-    setYear(year + 1);
-  }
+  useEffect(() => refreshDays(), [user, year]);
 
   const navigationButtonClassName = classNames(
     'p-4',
@@ -59,7 +64,7 @@ export const Grid: FC<GridProps> = ({ user }: GridProps) => {
       <div className="flex justify-between">
         <button
           className={navigationButtonClassName}
-          onClick={previousYear}
+          onClick={() => onPreviousYear()}
           disabled={year === config.days.minYear}
         >
           <FontAwesomeIcon icon={faArrowLeft} />
@@ -67,7 +72,7 @@ export const Grid: FC<GridProps> = ({ user }: GridProps) => {
         <h1>{year}</h1>
         <button
           className={navigationButtonClassName}
-          onClick={nextYear}
+          onClick={() => onNextYear()}
           disabled={year === moment().year()}
         >
           <FontAwesomeIcon icon={faArrowRight} />
