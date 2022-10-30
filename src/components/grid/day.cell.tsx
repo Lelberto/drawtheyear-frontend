@@ -16,7 +16,7 @@ export const DayCell = ({ dayDate, user, day }: DayCellProps) => {
 
   return (
     <Link
-      to={user && day ? `/user/${user.username}/day/${day.date}` : `/create-day?date=${dayDate}`}
+      to={user ? `/user/${user.username}/day/${dayDate}` : ''}
       className="flex px-2 py-1 border rounded justify-between align-middle"
       style={{ background: buildBackground }}
     >

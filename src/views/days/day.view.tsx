@@ -107,7 +107,11 @@ export const DayView = () => {
     if (user) {
       dayManager.findByDate(user, dayDate)
         .then(res => setDay(res.data))
-        .catch(err => console.error('Could not find day :', err));
+        .catch(() => {
+          dayManager.create(user, { date: dayDate })
+            .then(() => refreshDay())
+            .catch(err => console.error('Could not find or create day :', err));
+        });
     }
   }
 

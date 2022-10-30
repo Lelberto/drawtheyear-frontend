@@ -24,6 +24,13 @@ export const useDayManager = (options: DayManagerOptions = { useMe: true }) => {
     return await query.users.findDayByDate(user.username, date);
   }
 
+  const create = async (user: User, data: Partial<Day>) => {
+    if (options.useMe && authUser && user.id === authUser.id) {
+      return await query.users.me.createDay(data);
+    }
+    return await query.users.createDay(user.username, data);
+  }
+
   const update = async (user: User, day: Day, data: Partial<Day>) => {
     if (options.useMe && authUser && user.id === authUser.id) {
       return await query.users.me.updateDay(day.date, data);
@@ -48,6 +55,7 @@ export const useDayManager = (options: DayManagerOptions = { useMe: true }) => {
   return {
     findByYear,
     findByDate,
+    create,
     update,
     addEmotion,
     removeEmotion
