@@ -24,10 +24,14 @@ export const DayCell = ({ dayDate, user, day }: DayCellProps) => {
     {
       'opacity-50': !day,
       'opacity-100': day,
-      'hover:opacity-80': !isAfterNow
+      'hover:opacity-80': !day && !isAfterNow
     },
     {
       'bg-red-800': isAfterNow
+    },
+    'transition-opacity duration-200',
+    {
+      'cursor-not-allowed': isAfterNow
     }
   );
 
