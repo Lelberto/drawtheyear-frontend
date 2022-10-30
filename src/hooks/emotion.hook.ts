@@ -1,27 +1,36 @@
-import { useEffect, useState } from 'react';
-import { Emotion, User } from '../types/data.types'
+import { Emotion, User } from '../types/data.types';
 import { useQuery } from './query.hook';
 import { useAuthUser } from './user.hook';
 
-type DaysHookOptions = {
-  checkAuthUser?: boolean;
+type EmotionManagerOptions = {
+  useMe: boolean;
 }
-export const useEmotions = (user: User, options: DaysHookOptions = { checkAuthUser: true }) => {
-  const [emotions, setEmotions] = useState<Emotion[]>([]);
+
+export const useEmotionManager = (options: EmotionManagerOptions = { useMe: true }) => {
   const authUser = useAuthUser();
   const query = useQuery();
-  useEffect(() => {
-    if (user) {
-      if (options.checkAuthUser && user.id === authUser?.id) {
-        query.users.me.findEmotions()
-          .then(res => setEmotions(res.data))
-          .catch(err => console.error('Could not find emotions', err))
-      } else {
-        query.users.findEmotions(user.username)
-          .then(res => setEmotions(res.data))
-          .catch(err => console.error('Could not find emotions', err))
-      }
+
+  const find = async (user: User) => {
+    if (options.useMe && authUser && user.id === authUser.id) {
+      return await query.users.me.findEmotions();
     }
-  }, [user, authUser]);
-  return emotions;
+    return await query.users.findEmotions(user.username);
+  }
+
+  const create = async (user: User, data: Partial<Emotion>) => {
+    if (options.useMe && authUser && user.id === authUser.id) {
+      return await query.users.me.createEmotion(data);
+    }
+    return await query.users.createEmotion(user.username, data);
+  }
+
+  const update = async (emotion: Emotion, data: Partial<Emotion>) => {
+    return await query.emotions.updateEmotion(emotion.id, data);
+  }
+
+  return {
+    find,
+    create,
+    update
+  }
 }
