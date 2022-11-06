@@ -16,9 +16,9 @@ export const VisibilityButton = ({
         switch (visibility) {
             case 'private':
             default:
-                return <FontAwesomeIcon icon={faUnlock} />;
-            case 'public':
                 return <FontAwesomeIcon icon={faLock} />;
+            case 'public':
+                return <FontAwesomeIcon icon={faUnlock} />;
         }
     }, [visibility]);
 
@@ -28,13 +28,13 @@ export const VisibilityButton = ({
         'bg-dark',
         'border rounded-full',
         {
-            'border-red-500': visibility === 'public',
-            'border-green-500': visibility === 'private',
+            'border-green-500': visibility === 'public',
+            'border-red-500': visibility === 'private',
         },
         'text-xl',
         {
-            'text-red-500': visibility === 'public',
-            'text-green-500': visibility === 'private',
+            'text-green-500': visibility === 'public',
+            'text-red-500': visibility === 'private',
         },
         className
     );
