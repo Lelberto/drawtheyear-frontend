@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 
 export type ChildrenProps = {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export type VariantProps = {
-  variant: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary'
 }
