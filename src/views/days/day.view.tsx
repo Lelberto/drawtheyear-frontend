@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { AttachmentBlock } from '../../components/attachments/attachment-block';
 import { EmotionBadge } from '../../components/badges/emotion.badge';
 import { VisibilityButton } from '../../components/buttons/visibility.button';
 import { EmotionSelection } from '../../components/forms/days/emotion-selection';
@@ -170,6 +171,11 @@ export const DayView = () => {
           <div className="flex-auto p-2 border border-light rounded space-y-2">
             <h4 className="text-center">Votre journée</h4>
             <h5 className="text-secondary text-center font-bold">Coming Soon</h5>
+            <div>
+              {day?.attachments?.map((attachment, i) => (
+                <AttachmentBlock key={i} attachment={attachment} />
+              ))}
+            </div>
           </div>
           <div className="p-2 border border-light rounded space-y-2 overflow-y-scroll">
             <h4 className="text-center">Émotions</h4>

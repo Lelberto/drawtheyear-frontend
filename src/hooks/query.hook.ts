@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { config } from '../config/config';
-import { Day, Emotion, User } from '../types/data.types';
+import { Attachment, Day, Emotion, User } from '../types/data.types';
 import { LocalStorageKey } from '../types/local-storage.types';
 import { AccessTokenResponse, CreationResponse, DataResponse, Response } from '../types/response.types';
 
@@ -75,6 +75,7 @@ export const useQuery = () => {
       updateDay: (username: string, dayDate: string, data: Partial<Day>) => query<CreationResponse>('PATCH', `${config.apiUrl}/users/${username}/days/${dayDate}`, { auth: true, body: data }),
       addEmotionToDay: (username: string, dayDate: string, emotionId: string) => query<CreationResponse>('PATCH', `${config.apiUrl}/users/${username}/days/${dayDate}/emotions/add`, { auth: true, body: { emotionId } }),
       removeEmotionFromDay: (username: string, dayDate: string, emotionId: string) => query<CreationResponse>('PATCH', `${config.apiUrl}/users/${username}/days/${dayDate}/emotions/remove`, { auth: true, body: { emotionId } }),
+      findDayAttachments: (username: string, dayDate: string) => query<DataResponse<Attachment>>('GET', `${config.apiUrl}/user/${username}/days/${dayDate}/attachments`, { auth: true }),
       me: {
         find: () => query<DataResponse<User>>('GET', `${config.apiUrl}/me`, { auth: true }),
         findEmotions: () => query<DataResponse<Emotion[]>>('GET', `${config.apiUrl}/me/emotions`, { auth: true }),
@@ -84,11 +85,16 @@ export const useQuery = () => {
         createDay: (data: Partial<Day>) => query<CreationResponse>('POST', `${config.apiUrl}/me/days`, { auth: true, body: data }),
         updateDay: (dayDate: string, data: Partial<Day>) => query<CreationResponse>('PATCH', `${config.apiUrl}/me/days/${dayDate}`, { auth: true, body: data }),
         addEmotionToDay: (dayDate: string, emotionId: string) => query<CreationResponse>('PATCH', `${config.apiUrl}/me/days/${dayDate}/emotions/add`, { auth: true, body: { emotionId } }),
-        removeEmotionFromDay: (dayDate: string, emotionId: string) => query<CreationResponse>('PATCH', `${config.apiUrl}/me/days/${dayDate}/emotions/remove`, { auth: true, body: { emotionId } })
+        removeEmotionFromDay: (dayDate: string, emotionId: string) => query<CreationResponse>('PATCH', `${config.apiUrl}/me/days/${dayDate}/emotions/remove`, { auth: true, body: { emotionId } }),
+        findDayAttachments: (dayDate: string) => query<DataResponse<Attachment>>('GET', `${config.apiUrl}/me/days/${dayDate}/attachments`, { auth: true })
       }
     },
     emotions: {
       updateEmotion: (emotionId: string, data: Partial<Emotion>) => query<CreationResponse>('PATCH', `${config.apiUrl}/emotions/${emotionId}`, { auth: true, body: data }),
+    },
+    attachments: {
+      stream: (attachmentId: string) => query<Buffer>('GET', `${config.apiUrl}/attachments/${attachmentId}/stream`, { auth: true }),
+      download: (attachmentId: string) => query<DataResponse<string>>('GET', `${config.apiUrl}/attachments/${attachmentId}/download`, { auth: true })
     }
   };
 }

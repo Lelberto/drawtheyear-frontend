@@ -18,4 +18,10 @@ export interface Day extends Entity {
   resume: string;
   visibility: 'public' | 'private';
   emotions: Emotion[];
+  attachments: Attachment[];
+}
+
+export interface Attachment extends Entity {
+  name: string;
+  mimeType: string;
 }
